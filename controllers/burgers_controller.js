@@ -17,17 +17,21 @@ router.get("/", function (req, res) {
 });
 
 router.post("/api/burgers", function (req, res) {
-    burger.insertOne(req.body.name, req.body.sleepy, function (result) {
+    burger.insertOne(req.body.burger_name, req.body.devoured, function (result) {
             // Send back the ID of the new quote
             res.json({ id: result.insertId });
         });
 });
 
 router.put("/api/burgers/:id", function (req, res) {
+    console.log("devour");
     burger.updateOne(req.body.devoured, req.params.id, function (result) {
+        console.log(req.body.devoured);
             if (result.changedRows == 0) {
                 // If no rows were changed, then the ID must not exist, so 404
+                console.log("no rows")
                 return res.status(404).end();
+
             } else {
                 res.status(200).end();
             }
